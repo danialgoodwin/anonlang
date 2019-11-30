@@ -1,27 +1,38 @@
-"""
-Convert input into tokens.
-"""
+import generic_lexer
 
-import re
 
-def lex(input, token_expressions):
-    pos = 0
-    tokens = []
-    size = len(input)
-    while pos < size:
-        match = None
-        for token_expr in token_expressions:
-            pattern, tag = token_expr
-            regex = re.compile(pattern)
-            match = regex.match(input, pos)
-            if match:
-                text = match.group(0)
-                if tag:
-                    token = (text, tag)
-                    tokens.append(token)
-                break
-        if not match:
-            raise SyntaxError(f'Illegal character: {input[pos]}')
-        else:
-            pos = match.end(0)
-    return tokens
+RESERVED = 'RESERVED'
+ID = 'ID'
+
+
+# Using array to keep elements in order
+TOKEN_EXPRESSIONS = [
+    (r'[ \n\t]+', None),
+    (r'//[^\n]*', None),
+    
+    (r'\(', RESERVED),
+    (r'\)', RESERVED),
+    ('{', RESERVED),
+    ('}', RESERVED),
+    ('=', RESERVED),
+    (',', RESERVED),
+    (r'\'', RESERVED),
+    
+    (r'[a-zA-Z0-9_]+', ID)
+]
+
+
+def lex(characters):
+    return generic_lexer.lex(characters, TOKEN_EXPRESSIONS)
+
+
+def main():
+    file = input('File to lex: ')
+    text = open(file).read()
+    tokens = lex(text)
+    print()
+    print(tokens)
+
+
+if __name__ == '__main__':
+    main()

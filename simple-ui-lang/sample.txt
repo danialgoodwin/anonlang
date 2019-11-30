@@ -1,0 +1,8 @@
+ViewType(attr1='value1', attr2='value2', attr3='42') {
+    // Child views go here
+}
+ViewType(name='Row B') {
+    ViewType(name='B, Row 1, Column 1'), ViewType(name='B, Row 1, Column 2')
+    ViewType(name='B, Row 2, Column 1'), ViewType(name='B, Row 2, Column 2')
+    ViewType(name='B, Row 3, Column 1'), ViewType(name='B, Row 3, Column 2')
+}
